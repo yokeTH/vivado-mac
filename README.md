@@ -1,10 +1,15 @@
+
 > [!NOTE]  
-> Tested on MacOS 15 Sequoia.
+> Tested on MacOS 15 Sequoia, MacOS 26 Tahoe.
 > MacOS 14 is not supported.
 
 # Vivado on macOS via Docker
 
 This repository provides a solution to run Xilinx Vivado on macOS using Docker containerization.
+## Support Version
+- 2025.2
+- 2024.2
+- 2023.2
 
 ## Normal Vivado Workflow
 
@@ -16,6 +21,7 @@ The typical FPGA development workflow in Vivado consists of:
 5. Program to [Basys3](https://digilent.com/reference/_media/basys3:basys3_rm.pdf?srsltid=AfmBOorSKF2T_MfS024F4IiVmQr1ViDkssoCMtlG48_RoII45ntqSTt2) Board
 
 > ### Programming with Docker Limitation (Solved)
+> Note: Now solve with Xilinx Visual Cable
 > When running Vivado in a container, direct hardware programming is not possible due to USB device access restrictions. To solve this, we use `openFPGALoader`:
 > 1. Generate bitstream in containerized Vivado
 > 2. Locate bitstream in your project directory (typically at `<project_name>/<project_name>.runs/impl_1/<top_level_module>.bit`)
@@ -24,7 +30,6 @@ The typical FPGA development workflow in Vivado consists of:
     brew install openfpgaloader
     openFPGALoader -b basys3 /path/to/project/<project_name>.runs/impl_1/<top_level_module>.bit
     ```
-
 
 ## Table of Contents
 1. [Prerequisites](#prerequisites)
@@ -41,7 +46,7 @@ The typical FPGA development workflow in Vivado consists of:
     - Install Homebrew by running:
         ```bash
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        ```
+		```
     - Follow any additional setup instructions provided by the installer
 
 2. **Docker Desktop**
@@ -49,7 +54,11 @@ The typical FPGA development workflow in Vivado consists of:
     - Alternatively, install via Homebrew:
         ```bash
         brew install --cask docker
-        ```
+	  ```
+	- (Recommended) Alternative to Docker you can use OrbStack:
+		```bash
+		brew install --cask orbstack
+		```
 
 3. **XQuartz**
     - Install via Homebrew:
@@ -58,15 +67,15 @@ The typical FPGA development workflow in Vivado consists of:
         ```
     - After installation, restart your computer
     - Open XQuartz and enable "Allow connections from network clients" in XQuartz preferences
-    - Navigate to XQuartz -> Settings -> Security -> Allow connections from network clients
+    - Navigate to XQuartz (next to Apple logo on top-left cornor) -> Settings -> Security -> Allow connections from network clients
 
 4. **OpenFPGALoader**
+Now this repository contain `openfpgaloader` binary for Mac arm with enable xvc. you have to install dependency 
     ```bash
-    brew install libftdi hidapi # dependency
-    brew install openfpgaloader
+    brew install libusb libftdi hidapi
     ```
 
-4. **Vivado Installer**
+6. **Vivado Installer**
     - Download Vivado installer for Linux from [AMD/Xilinx website](https://www.xilinx.com/support/download.html)
 
 ## Installation
@@ -94,16 +103,16 @@ The typical FPGA development workflow in Vivado consists of:
     - XQuartz must be running before starting Vivado
 
 1. Start Xilinx Virtual Cable (XVC)
+Firstly, you have to plug the Basys3 in to your computer.
     ```bash
     # make sure your are in the vivado-mac directory
     ./openFPGALoader -b basys3 --xvc
     ```
-
-2. Launch Vivado container:
+3. Launch Vivado container:
     ```bash
     ./scripts/start_container.sh
     ```
-3. Vivado GUI will appear in XQuartz window
+4. Vivado GUI will appear in XQuartz window
 
 ## Troubleshooting
 
@@ -118,7 +127,7 @@ The typical FPGA development workflow in Vivado consists of:
     - Run `xhost + localhost` before starting container
 2. **For permission issues**, ensure setup script has executable permissions (`chmod +x scripts/setup.sh`)
 3. **100 Killed Error**
-    If you encounter the following error while using version `2024.2`:
+    If you encounter the following error:
     ```
     100 Killed ${X_JAVA_HOME} /bin/java ${ARGS} -cp ${X_CLASS_PATH}    comxilinx.installerapi.InstallerLauncher "$@"
     ```
