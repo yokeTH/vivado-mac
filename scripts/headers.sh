@@ -13,7 +13,7 @@ readonly GREY='\033[0;90m'
 readonly NC='\033[0m' # No Color
 
 # Docker
-readonly IMAGE_NAME="ubuntu_vivado_env"
+readonly IMAGE_NAME="ghcr.io/yoketh/vivado-mac"
 readonly INSTALLATION_BIN_LOG_PATH="${script_dir}/installation_location.txt"
 
 # Function to print error message in red

@@ -18,9 +18,9 @@ fi
 if ! [[ $(docker image ls ) == *$IMAGE_NAME* ]]
 then
     step "Build The Image"
-    if ! docker build --platform linux/amd64 -t $IMAGE_NAME "$script_dir"
+    if ! docker pull --platform=amd64 $IMAGE_NAME
     then
-        error "Docker image generation failed!"
+        error "Docker image pull failed!"
         exit 1
     fi
     success "The Docker image was successfully generated."

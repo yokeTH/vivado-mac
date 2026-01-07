@@ -1,4 +1,7 @@
+#!/bin/bash
+
 script_dir=$(dirname -- "$(readlink -nf $0)";)
+source "$script_dir/headers.sh"
 
 function stop_container {
     docker kill vivado > /dev/null 2>&1
@@ -7,7 +10,9 @@ function stop_container {
 }
 trap 'stop_container' INT
 
+export export DISPLAY=:0
 /opt/X11/bin/xhost + localhost
+
 docker run --init --rm --network=host \
     -e DISPLAY=host.docker.internal:0 \
     --name vivado \
