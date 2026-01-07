@@ -10,7 +10,7 @@ function stop_container {
 }
 trap 'stop_container' INT
 
-export export DISPLAY=:0
+export DISPLAY=:0
 /opt/X11/bin/xhost + localhost
 
 docker run --init --rm --network=host \
