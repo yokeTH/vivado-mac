@@ -22,6 +22,7 @@ The typical FPGA development workflow in Vivado consists of:
 
 > ### Programming with Docker Limitation (Solved)
 > Note: Now solve with Xilinx Visual Cable
+> 
 > When running Vivado in a container, direct hardware programming is not possible due to USB device access restrictions. To solve this, we use `openFPGALoader`:
 > 1. Generate bitstream in containerized Vivado
 > 2. Locate bitstream in your project directory (typically at `<project_name>/<project_name>.runs/impl_1/<top_level_module>.bit`)
