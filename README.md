@@ -62,6 +62,7 @@ The typical FPGA development workflow in Vivado consists of:
 
 4. **OpenFPGALoader**
     ```bash
+    brew install libftdi hidapi # dependency
     brew install openfpgaloader
     ```
 
