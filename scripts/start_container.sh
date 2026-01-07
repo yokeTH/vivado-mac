@@ -7,7 +7,7 @@ function stop_container {
 }
 trap 'stop_container' INT
 
-xhost + localhost
+/opt/X11/bin/xhost + localhost
 docker run --init --rm --network=host \
     -e DISPLAY=host.docker.internal:0 \
     --name vivado \
