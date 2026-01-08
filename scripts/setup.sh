@@ -18,7 +18,7 @@ fi
 if ! [[ $(docker image ls ) == *$IMAGE_NAME* ]]
 then
     step "Build The Image"
-    if ! docker pull --platform=amd64 $IMAGE_NAME
+    if ! docker pull --platform=linux/amd64 $IMAGE_NAME
     then
         error "Docker image pull failed!"
         exit 1
