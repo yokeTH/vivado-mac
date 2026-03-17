@@ -18,3 +18,9 @@ Desktop
 .*_history
 proxy.txt
 .Xil
+.direnv
+
+
+# Added by cargo
+
+/target
