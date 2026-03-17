@@ -20,18 +20,6 @@ The typical FPGA development workflow in Vivado consists of:
 4. Generate Bitstream
 5. Program to [Basys3](https://digilent.com/reference/_media/basys3:basys3_rm.pdf?srsltid=AfmBOorSKF2T_MfS024F4IiVmQr1ViDkssoCMtlG48_RoII45ntqSTt2) Board
 
-> ### Programming with Docker Limitation (Solved)
-> Note: Now solve with Xilinx Visual Cable
-> 
-> When running Vivado in a container, direct hardware programming is not possible due to USB device access restrictions. To solve this, we use `openFPGALoader`:
-> 1. Generate bitstream in containerized Vivado
-> 2. Locate bitstream in your project directory (typically at `<project_name>/<project_name>.runs/impl_1/<top_level_module>.bit`)
-> 3. Use `openFPGALoader` on host to program FPGA:
-    ```bash
-    brew install openfpgaloader
-    openFPGALoader -b basys3 /path/to/project/<project_name>.runs/impl_1/<top_level_module>.bit
-    ```
-
 ## Table of Contents
 1. [Prerequisites](#prerequisites)
 2. [Installation](#installation)
@@ -71,9 +59,8 @@ The typical FPGA development workflow in Vivado consists of:
     - Navigate to XQuartz (next to Apple logo on top-left cornor) -> Settings -> Security -> Allow connections from network clients
 
 4. **OpenFPGALoader**
-Now this repository contain `openfpgaloader` binary for Mac arm with enable xvc. you have to install dependency 
     ```bash
-    brew install libusb libftdi hidapi
+    brew install openfpgaloader
     ```
 
 6. **Vivado Installer**
@@ -106,10 +93,10 @@ Now this repository contain `openfpgaloader` binary for Mac arm with enable xvc.
 1. Start Xilinx Virtual Cable (XVC)
 Firstly, you have to plug the Basys3 in to your computer.
     ```bash
-    # make sure your are in the vivado-mac directory
-    ./openFPGALoader -b basys3 --xvc
+    openFPGALoader -b basys3 --xvc
     ```
 3. Launch Vivado container:
+Open another terminal,
     ```bash
     ./scripts/start_container.sh
     ```
@@ -144,7 +131,8 @@ Vivado requires a license from AMD/Xilinx. Please obtain appropriate licensing f
 
 ## OpenFPGALoader License
 
-This repository contains the built binary of [OpenFPGALoader](https://github.com/trabucayre/openFPGALoader) that enable XVC feature for mac
+~~This repository contains the built binary of [OpenFPGALoader](https://github.com/trabucayre/openFPGALoader) that enable XVC feature for mac~~
+Now official openfpgaloader is enable xilinx virtual cable.
 
 ## Disclaimer
 
