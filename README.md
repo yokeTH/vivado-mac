@@ -86,6 +86,12 @@ The typical FPGA development workflow in Vivado consists of:
     - Follow the installation instructions in the Vivado installer
     - Select desired Vivado components
 
+## Custom Settings
+
+Each Vivado version has its own install config at `scripts/vivado_settings_<version>.txt` (for example `scripts/vivado_settings_202601.txt`). `install.sh` matches your installer by checksum, picks the right config, and passes it to `xsetup`, so the install runs without prompts.
+
+By default it installs the common 7-series, UltraScale, and UltraScale+ device families plus Kria SOM devices and DocNav. To change that, edit the `Modules=` line: set a module to `1` to install it or `0` to skip it. For example, to install only the Basys3's Artix-7, set `Artix-7 FPGAs:1` and everything else to `0`.
+
 ## Usage
 0. **Ensure Display Setup**
     - Check [X11 Display Issues](#x11-display-issues) if you encounter problems
