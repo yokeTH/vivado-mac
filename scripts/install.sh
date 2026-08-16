@@ -53,12 +53,12 @@ INSTALLATION_FILE_PATH=$(cat "$INSTALLATION_BIN_LOG_PATH" | xargs)
 INSTALLER_HASH=($(md5sum "$script_dir/$INSTALLATION_FILE_PATH"))
 VERSION=$(get_version_from_hash "$INSTALLER_HASH")
 
-if [ $VERSION == "" ]; then
+if [ -z "$VERSION" ]; then
     error The installer $INSTALLATION_FILE_PATH hash not match. please make sure you download linux installer and support version.
     exit 1
 fi
 
-if [ $VERSION == "202401" ]; then
+if [ "$VERSION" == "202401" ]; then
     error version $VERSION is not support please use latest version of year.
     exit 1
 fi
@@ -117,7 +117,9 @@ then
 
     step "Generate AuthTokenGen"
 
-    expect -f $HOME/scripts/auth_token_gen.exp /home/user/installer/xsetup "$SECRET_FILE"
+    if expect -f $HOME/scripts/auth_token_gen.exp /home/user/installer/xsetup "$SECRET_FILE"; then
+        GENERATED_TOKEN=true
+    fi
 else
     GENERATED_TOKEN=true
 fi
@@ -125,4 +127,7 @@ fi
 if $GENERATED_TOKEN; then
     step "Start Download and Installing"
     /home/user/installer/xsetup -c "/home/user/scripts/vivado_settings_$VERSION.txt" -b Install -a XilinxEULA,3rdPartyEULA
+else
+    error "Token generation failed. please check your credentials and run this script again."
+    exit 1
 fi
