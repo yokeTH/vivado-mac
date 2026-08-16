@@ -7,6 +7,7 @@
 
 This repository provides a solution to run Xilinx Vivado on macOS using Docker containerization.
 ## Support Version
+- 2026.1
 - 2025.2
 - 2024.2
 - 2023.2
