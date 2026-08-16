@@ -117,7 +117,9 @@ then
 
     step "Generate AuthTokenGen"
 
-    expect -f $HOME/scripts/auth_token_gen.exp /home/user/installer/xsetup "$SECRET_FILE"
+    if expect -f $HOME/scripts/auth_token_gen.exp /home/user/installer/xsetup "$SECRET_FILE"; then
+        GENERATED_TOKEN=true
+    fi
 else
     GENERATED_TOKEN=true
 fi
@@ -125,4 +127,7 @@ fi
 if $GENERATED_TOKEN; then
     step "Start Download and Installing"
     /home/user/installer/xsetup -c "/home/user/scripts/vivado_settings_$VERSION.txt" -b Install -a XilinxEULA,3rdPartyEULA
+else
+    error "Token generation failed. please check your credentials and run this script again."
+    exit 1
 fi
