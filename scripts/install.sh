@@ -4,6 +4,7 @@ script_dir=$(dirname -- "$(readlink -nf $0)";)
 source "$script_dir/headers.sh"
 
 declare -A VERSIONS=(
+    ["202601"]="02850e72c78859bbcd6485846940921e"
     ["202502"]="abe838aa2e2d3d9b10fea94165e9a303"
     ["202402"]="20c806793b3ea8d79273d5138fbd195f"
     ["202401"]="8b0e99a41b851b50592d5d6ef1b1263d"
