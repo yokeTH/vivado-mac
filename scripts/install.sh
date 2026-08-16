@@ -53,12 +53,12 @@ INSTALLATION_FILE_PATH=$(cat "$INSTALLATION_BIN_LOG_PATH" | xargs)
 INSTALLER_HASH=($(md5sum "$script_dir/$INSTALLATION_FILE_PATH"))
 VERSION=$(get_version_from_hash "$INSTALLER_HASH")
 
-if [ $VERSION == "" ]; then
+if [ -z "$VERSION" ]; then
     error The installer $INSTALLATION_FILE_PATH hash not match. please make sure you download linux installer and support version.
     exit 1
 fi
 
-if [ $VERSION == "202401" ]; then
+if [ "$VERSION" == "202401" ]; then
     error version $VERSION is not support please use latest version of year.
     exit 1
 fi
